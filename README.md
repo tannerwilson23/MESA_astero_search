@@ -1,1 +1,0 @@
-# MESA_astero_search
