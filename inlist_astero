@@ -1,0 +1,78 @@
+! based on star/test_suite/example_astero
+
+&star_job  ! inlist_astero   
+
+      show_log_description_at_start = .false.
+      
+      load_saved_model = .true.
+      saved_model_name = 'astero_test.mod'
+
+      save_model_when_terminate = .true.
+      save_model_filename = 'final.mod'
+
+      change_initial_net = .true. ! switch nuclear reaction network
+      new_net_name = 'o18_and_ne22.net'
+
+      set_rate_c12ag = 'Kunz'
+      set_rate_n14pg = 'jina reaclib'
+	   
+      kappa_file_prefix = 'a09'
+
+      pgstar_flag = .false.
+
+/ ! end of star_job namelist
+
+
+&controls
+
+      smooth_outer_xa_big = 1d-4
+      smooth_outer_xa_small = 1d-8
+      
+      num_cells_for_smooth_brunt_B = 0 ! changed from 2
+      num_cells_for_smooth_gradL_composition_term = 5 ! changed from 3
+      
+      calculate_Brunt_N2 = .true.
+      write_pulse_data_with_profile = .true.
+      pulse_data_format = 'FGONG'
+      format_for_FGONG_data = '(1P5E16.9,x)'
+      
+      !write_pulsation_plot_data = .true.
+      add_center_point_to_pulse_data = .true.
+      keep_surface_point_for_pulse_data = .true.
+      add_double_points_to_pulse_data = .true.
+      add_atmosphere_to_pulse_data = .true.
+      
+
+      atm_option = 'T_tau'
+      atm_T_tau_relation = 'Eddington'
+      atm_T_tau_opacity = 'fixed'
+         ! you could also use:
+         ! 'Eddington_grey' ! Eddington T-tau integration
+         ! 'Krishna_Swamy' ! Krishna Swamy T-tau integration
+         ! 'solar_Hopf_grey' ! another T(tau), this one tuned to solar data
+      
+      
+      ! options for energy conservation (see MESA V, Section 3)
+      use_dedt_form_of_energy_eqn = .true.
+      use_gold_tolerances = .true.
+
+      ! timesteps
+
+      max_years_for_timestep = -1
+      min_timestep_limit = 1d-12
+      mesh_delta_coeff = 1
+      max_allowed_nz = 30000
+      max_timestep = 3.15d15  ! in seconds.  max_timestep <= 0 means no upper limit.            
+
+      varcontrol_target = 1d-3
+
+
+      ! controls for output
+
+      photo_interval = 999999
+      profile_interval = 100
+      history_interval = 10
+      terminal_interval = 10
+      write_header_frequency = 10
+
+/ ! end of controls namelist
