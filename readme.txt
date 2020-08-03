@@ -1,4 +1,4 @@
-So here's how to run the asteroid search.
+So here's how to run the astero search.
 
 Move these files along the following directory path; $MESA_DIR/star/astero/work and replace these files in this directory with the files I have uploaded. (Msg me if you have issues but they should be fine)
 
