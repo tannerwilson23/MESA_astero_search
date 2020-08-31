@@ -127,7 +127,7 @@
          
       ! you specify the weighting of the terms in chi2_seismo by setting the following
    
-      chi2_seismo_delta_nu_fraction = 0d0  
+      chi2_seismo_delta_nu_fraction = 1d0  
          ! if > 0 then delta_nu and delta_nu_sigma must be set (see below)
       chi2_seismo_nu_max_fraction = 0d0    
          ! if > 0 then nu_max and nu_max_sigma must be set (see below)
@@ -274,7 +274,7 @@
          ! just do a single run using "first" values for mass, alpha, Y, ...
          
          
-      ! search_type = 'scan_grid'
+      search_type = 'scan_grid'
          ! eval chi^2 for each parameter combination
          ! that is within min to max with steps given by "delta"
          
@@ -287,7 +287,7 @@
          ! with chi2_seismo_delta_nu_fraction = 0 to include frequencies
 
          ! output goes to the following file when search_type = 'scan_grid'
-         scan_grid_output_filename = 'scan_grid_results.data'
+         !scan_grid_output_filename = 'scan_grid_results.data'
          
          restart_scan_grid_from_file = .false.
             ! if true, then reads the scan_grid_output file 
@@ -296,7 +296,7 @@
       
       ! there are 3 types of optimization provided: simplex, newuoa, and bobyqa
 
-      search_type = 'simplex'
+      !search_type = 'simplex'
          ! search for minimal chi^2 model using Nelder-Mead simplex algorithm 
             ! Nelder, J. A. and Mead, R.
             ! "A Simplex Method for Function Minimization."
@@ -338,7 +338,7 @@
       ! candidate and want to look near it for even better results. 
       
       
-      search_type = 'simplex'
+      !search_type = 'simplex'
          
          ! terminate if reach max allowed iterations or function calls
          simplex_itermax = 1000 ! each iteration revises the simplex
@@ -497,8 +497,8 @@
 
          first_FeH = 0.093
          first_Y = 0.255
-         first_mass = 1.293
-         first_alpha = 2.07
+         first_mass = 1.3068
+         first_alpha = 2.057
          first_f_ov = 0.015d0
 
          first_my_param1 = 0
@@ -562,7 +562,7 @@
             chi2_spectroscopic_limit = 20
 
          ! don't consider models with chi2_delta_nu above this limit 
-            chi2_delta_nu_limit = 20
+            chi2_delta_nu_limit = 225
 
          ! we calculate radial modes only if pass the previous checks
       
@@ -570,7 +570,7 @@
          ! so we skip the nonradial calculation if the radial results are poor.
 
          ! don't consider models with chi2_radial above this limit 
-            chi2_radial_limit = 30
+            chi2_radial_limit = 100
       
          ! only calculate full chi^2 if pass all these limit checks
          
@@ -586,7 +586,7 @@
       
          ! these are just default values -- you will probably need to adjust them for your problem.
          max_yrs_dt_when_cold = 1d7 ! when fail Lnuc/L, chi2_spectro, or ch2_delta_nu
-         max_yrs_dt_when_warm = 5d4 ! when pass previous but fail chi2_radial; < max_yrs_dt_when_cold
+         max_yrs_dt_when_warm = 1d4 ! when pass previous but fail chi2_radial; < max_yrs_dt_when_cold
          max_yrs_dt_when_hot = 1d4 ! when pass chi2_radial; < max_yrs_dt_when_warm
          
          max_yrs_dt_chi2_small_limit = 1d4 ! < max_yrs_dt_when_hot
@@ -635,7 +635,7 @@
          sigmas_coeff_for_surface_He_limit = 0 ! disable by setting to 0
          sigmas_coeff_for_Rcz_limit = 0 ! disable by setting to 0
          sigmas_coeff_for_csound_rms_limit = 0 ! disable by setting to 0
-         sigmas_coeff_for_delta_nu_limit = -10 ! -5 ! disable by setting to 0
+         sigmas_coeff_for_delta_nu_limit = -100 ! -5 ! disable by setting to 0
          sigmas_coeff_for_csound_rms_limit = 0 ! disable by setting to 0
          sigmas_coeff_for_my_var1_limit = 0 ! disable by setting to 0
          sigmas_coeff_for_my_var2_limit = 0 ! disable by setting to 0
@@ -670,7 +670,7 @@
    
    
    ! surface corrections
-      correction_scheme = 'combined'
+      correction_scheme = 'kjeldsen'
          ! 'kjeldsen'   Correction of Kjeldsen et al. (2008)
          ! 'power_law'  Free power law, sanity check used in Ball & Gizon (2017)
          ! 'cubic'      Cubic correction of Ball & Gizon (2014, eqn 3)
@@ -697,13 +697,13 @@
          ! (ie. νac = 5mHz * (g/gsun)/sqrt(Teff/Teff_sun)
       correction_factor = 1 
          ! use this fraction of the correction; set to 0 to skip doing corrections.
-      !correction_b = 4.25d0
+      correction_b = 4.25d0
          ! solar-calibrated power law index used in the kjeldsen surface correction
          ! the kjeldsen surface correction uses the observed radial orders of the
          ! radial modes (l0_n_obs) if they are provided
       
-      !surf_coef1_name = 'surf_coef1'
-      !surf_coef2_name = 'surf_coef2'
+      surf_coef1_name = 'surf_coef1'
+      surf_coef2_name = 'surf_coef2'
          ! names that will be used in sample outputs, results data and history
          ! the default values `a_div_r` and `correction_r` correspond to the
          ! behaviour in r11701 and before
